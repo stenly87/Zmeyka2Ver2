@@ -88,6 +88,7 @@ namespace Zmeyka2
         public void Clear()
         {
             mainCanvas.Children.Clear();
+            elements.Clear();
             DrawGame();
         }
 
