@@ -104,6 +104,8 @@ namespace Zmeyka2
 
         private void AddRectangle(Point position, SolidColorBrush color)
         {
+            if (elements.ContainsKey(position))
+                return;
             Rectangle rect = new Rectangle();
             rect.Width = _elementSize;
             rect.Height = _elementSize;

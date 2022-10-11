@@ -9,7 +9,7 @@ namespace Zmeyka2
         event EventHandler OnGameFieldReady;
         event EventHandler<int> OnKeyPressed;
 
-        void ViewMessage(string v);
+        void ViewMessage(string message);
         
         void Clear();
         void RemoveGameElement(Point e);

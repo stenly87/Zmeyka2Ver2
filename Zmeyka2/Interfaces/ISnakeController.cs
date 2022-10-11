@@ -4,8 +4,8 @@ namespace Zmeyka2
 {
     internal interface ISnakeController
     {
-        void ChangeDirection(Direction newDirection);
         void Init(int countRows, int countColumns);
+        void ChangeDirection(Direction newDirection);
         Point MoveSnake();
         void Increase();
 
