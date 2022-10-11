@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\GameField.cs" />
+    <Compile Include="Interfaces\IGameField.cs" />
     <Compile Include="Logic\Direction.cs" />
     <Compile Include="Logic\AppleController.cs" />
     <Compile Include="Logic\GameControl.cs" />

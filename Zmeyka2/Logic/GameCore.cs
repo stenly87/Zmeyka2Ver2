@@ -9,10 +9,12 @@ namespace Zmeyka2
         private IGameTimer gameTimer;
         private ISnakeController snakeController;
         private IAppleController appleController;
-
-        public GameCore(IGameControl gameControl, IGameUI gameUI, IGameTimer gameTimer, ISnakeController snakeController, IAppleController appleController)
+        private IGameField gameField;
+      
+        public GameCore(IGameControl gameControl, IGameField gameField, IGameUI gameUI, IGameTimer gameTimer, ISnakeController snakeController, IAppleController appleController)
         {
             this.gameControl = gameControl;
+            this.gameField = gameField;
             this.gameUI = gameUI;
             this.gameTimer = gameTimer;
             this.snakeController = snakeController;
@@ -63,8 +65,8 @@ namespace Zmeyka2
         private void GameUI_OnGameFieldReady(object sender, System.EventArgs e)
         {
             gameTimer.Init(MainGameLoop);
-            appleController.Init(gameUI.CountRows, gameUI.CountColumns);
-            snakeController.Init(gameUI.CountRows, gameUI.CountColumns);
+            appleController.Init(gameField.CountRows, gameField.CountColumns);
+            snakeController.Init(gameField.CountRows, gameField.CountColumns);
         }
 
         private void MainGameLoop()
@@ -76,7 +78,7 @@ namespace Zmeyka2
 
         private void CheckCollision(Point headPosition)
         {
-            if (gameUI.CheckCollisionBorders(headPosition))
+            if (gameField.CheckCollisionBorders(headPosition))
             {
                 GameOver();
                 return;
@@ -97,8 +99,8 @@ namespace Zmeyka2
         private void ResetGame()
         {
             gameUI.Clear();
-            appleController.Init(gameUI.CountRows, gameUI.CountColumns);
-            snakeController.Init(gameUI.CountRows, gameUI.CountColumns);
+            appleController.Init(gameField.CountRows, gameField.CountColumns);
+            snakeController.Init(gameField.CountRows, gameField.CountColumns);
         }
 
         public void Start()

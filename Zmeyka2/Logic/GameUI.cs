@@ -10,11 +10,6 @@ namespace Zmeyka2
 {
     internal class GameUI : IGameUI
     {
-        public double GameWidth { get; private set; }
-        public double GameHeight { get; private set; }
-        public int CountRows { get; private set; }
-        public int CountColumns { get; private set; }
-
         int _elementSize = 55;
         MainWindow window;
         Canvas mainCanvas;
@@ -23,6 +18,12 @@ namespace Zmeyka2
         public event EventHandler<int> OnKeyPressed;
 
         Dictionary<Point, Rectangle> elements = new Dictionary<Point, Rectangle>();
+        private IGameField gameField;
+
+        public GameUI(IGameField gameField)
+        {
+            this.gameField = gameField;
+        }
 
         public void Init()
         {
@@ -46,29 +47,26 @@ namespace Zmeyka2
 
         private void DrawGame()
         {
-            GameWidth = mainCanvas.ActualWidth;
-            GameHeight = mainCanvas.ActualHeight;
-            CountColumns = (int)GameWidth / _elementSize;
-            CountRows = (int)GameHeight / _elementSize;
-
-            for (int i = 0; i < CountRows; i++)
+            gameField.Init(mainCanvas.ActualWidth / _elementSize, mainCanvas.ActualHeight / _elementSize);
+            
+            for (int i = 0; i < gameField.CountRows; i++)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
                 line.X1 = 0;
                 line.Y1 = i * _elementSize;
-                line.X2 = GameWidth;
+                line.X2 = gameField.GameWidth * _elementSize;
                 line.Y2 = i * _elementSize;
                 mainCanvas.Children.Add(line);
             }
-            for (int i = 0; i < CountColumns; i++)
+            for (int i = 0; i < gameField.CountColumns; i++)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
                 line.X1 = i * _elementSize;
                 line.Y1 = 0;
                 line.X2 = i * _elementSize;
-                line.Y2 = GameHeight;
+                line.Y2 = gameField.GameHeight * _elementSize;
                 mainCanvas.Children.Add(line);
             }
         }
@@ -76,13 +74,6 @@ namespace Zmeyka2
         public void ViewMessage(string message)
         {
             MessageBox.Show(message);
-        }
-
-        public bool CheckCollisionBorders(Point headPosition)
-        {
-            return headPosition.X > GameWidth - _elementSize ||
-                headPosition.X < 0 || headPosition.Y < 0 ||
-                headPosition.Y > GameHeight - _elementSize;
         }
 
         public void Clear()
