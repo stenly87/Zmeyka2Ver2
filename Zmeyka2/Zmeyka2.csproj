@@ -70,6 +70,7 @@
     <Compile Include="Interfaces\IGameUI.cs" />
     <Compile Include="Interfaces\ISnakeController.cs" />
     <Compile Include="Logic\Point.cs" />
+    <Compile Include="Logic\RectangleContainer.cs" />
     <Compile Include="Logic\SnakeController.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -13,6 +13,7 @@ namespace Zmeyka2
         int _elementSize = 55;
         MainWindow window;
         Canvas mainCanvas;
+        RectangleContainer rectangleContainer;
 
         public event EventHandler OnGameFieldReady;
         public event EventHandler<int> OnKeyPressed;
@@ -23,6 +24,7 @@ namespace Zmeyka2
         public GameUI(IGameField gameField)
         {
             this.gameField = gameField;
+            rectangleContainer = new RectangleContainer();
         }
 
         public void Init()
@@ -80,6 +82,7 @@ namespace Zmeyka2
         {
             mainCanvas.Children.Clear();
             elements.Clear();
+            rectangleContainer.Clear();
             DrawGame();
         }
 
@@ -87,6 +90,7 @@ namespace Zmeyka2
         {
             if (elements.ContainsKey(e))
             {
+                rectangleContainer.Store(elements[e]);
                 mainCanvas.Children.Remove(elements[e]);
                 elements.Remove(e);
             }
@@ -106,9 +110,8 @@ namespace Zmeyka2
         {
             if (elements.ContainsKey(position))
                 return;
-            Rectangle rect = new Rectangle();
-            rect.Width = _elementSize;
-            rect.Height = _elementSize;
+
+            Rectangle rect = rectangleContainer.GetFreeRectangle(_elementSize);
             rect.Fill = color;
 
             elements.Add(position, rect);
